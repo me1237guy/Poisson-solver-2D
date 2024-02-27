@@ -132,7 +132,7 @@ print("spsolve() time = %1.6s" % (time.time()-start_time))
 # Plot solution
 py.figure(figsize = (14,7))
 my_contourf(x,y,u,r'$\nabla^2 u = 0$')
-
+py.show()
 
 
 

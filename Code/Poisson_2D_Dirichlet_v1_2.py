@@ -63,7 +63,7 @@ uB = -1
 
 #==============================================================================
 # Dirichlet boundary conditions at an inner rectangular region
-ub2 = 1.5             # boundary value
+ub2 = 1.5             # 1.5 boundary value
  
 xb2 = [1, 1.4]        # lower and upper limits of x defining the inner boundary region
 yb2 = [-.5,.2]        # lower and upper limits of y defining the inner boundary region
@@ -199,7 +199,7 @@ print("spsolve() time = %1.6s" % (time.time()-start_time))
 py.figure(figsize = (14,7))
 my_contourf(x,y,u,r'$\nabla^2 u = 0$')
 #==============================================================================
-
+py.show()
 
 
 

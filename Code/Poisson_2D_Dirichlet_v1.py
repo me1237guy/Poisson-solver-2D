@@ -51,14 +51,14 @@ uL = 0.5
 uR = 1
 uT = -2
 uB = -1
-
+Nx = 50                         # No. of grid points along x direction
+Ny = 80                         # No. of grid points along y direction
 # Source function (right hand side vector)
 g = np.zeros(Nx*Ny) 
 
 
 # Define independent variables
-Nx = 50                         # No. of grid points along x direction
-Ny = 80                         # No. of grid points along y direction
+
 x = np.linspace(-3,3,Nx)        # x variables in 1D
 y = np.linspace(-3,3,Ny)        # y variable in 1D
 
@@ -129,6 +129,7 @@ print("spsolve() time = %1.6s" % (time.time()-start_time))
 # Plot solution
 py.figure(figsize = (14,4.8))
 my_contourf(x,y,u,r'$\nabla^2 u = 0$')
+py.show()
 
 
 

@@ -276,7 +276,7 @@ my_contourf(x,y,u,r'$u$')
 py.figure(figsize = (12,7))
 my_contourf(x,y,v,r'$|\nabla u|$')
 py.streamplot(x,y,vx,vy,color = 'w',density = 1.2, linewidth = 0.5)
-
+py.show()
 # thin_factor = 10
 # skip = (slice(None, None, thin_factor), slice(None, None, thin_factor))
 # py.quiver(X[skip],Y[skip],vx[skip]/v[skip],vy[skip]/v[skip],color = 'w')

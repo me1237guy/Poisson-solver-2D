@@ -257,7 +257,7 @@ my_contourf(x,y,u,r'$u\,(x,y)$')
 py.figure(figsize = (12,7))
 my_contourf(x,y,v,r'$|-\nabla u\,(x,y)|$','afmhot')
 py.streamplot(x,y,vx,vy,color = 'w',density = 1.2, linewidth = 0.4)
-
+py.show()
 
 
 
