@@ -118,6 +118,59 @@ def boundary_regions(x,y, ub_o,B_type_o, xb_i,yb_i,ub_i,B_type_i):
     
     
     return boundary_indices,boundary_type,boundary_value
+
+def boundary_regions_3d(x, y, z, ub_o, B_type_o, xb_i, yb_i, zb_i, ub_i, B_type_i):
+    boundary_indices = []
+    boundary_type = []
+    boundary_value = []
+
+    # Create necessary meshgrid and unravel grid from x, y, z. Define Nx, Ny, Nz
+    X, Y, Z = np.meshgrid(x, y, z)  # 3D meshgrid
+
+    # 1D indexing
+    Xu = X.ravel()  # Unravel 3D meshgrid to 1D array
+    Yu = Y.ravel()
+    Zu = Z.ravel()
+
+    Nx = len(x)
+    Ny = len(y)
+    Nz = len(z)
+
+    # Finding outer boundary regions
+    ind_unravel_L = np.squeeze(np.where(Xu == x[0]))  # Left boundary
+    ind_unravel_R = np.squeeze(np.where(Xu == x[Nx - 1]))  # Right boundary
+    ind_unravel_B = np.squeeze(np.where(Yu == y[0]))  # Bottom boundary
+    ind_unravel_T = np.squeeze(np.where(Yu == y[Ny - 1]))  # Top boundary
+    ind_unravel_F = np.squeeze(np.where(Zu == z[0]))  # Front boundary
+    ind_unravel_BK = np.squeeze(np.where(Zu == z[Nz - 1]))  # Back boundary
+
+    boundary_indices.append(ind_unravel_L)
+    boundary_indices.append(ind_unravel_R)
+    boundary_indices.append(ind_unravel_T)
+    boundary_indices.append(ind_unravel_B)
+    boundary_indices.append(ind_unravel_F)
+    boundary_indices.append(ind_unravel_BK)
+
+    boundary_type.extend(B_type_o)
+    boundary_value.extend(ub_o)
+
+    # Finding inner boundary regions
+    Nb_i = len(ub_i)  # Number of inner boundary regions
+
+    for m in range(Nb_i):
+        if m >= len(xb_i) or m >= len(yb_i) or m >= len(zb_i):
+            print("Error: Index out of range for inner boundary lists")
+            break
+        
+        temp1 = np.squeeze(np.where((Xu > xb_i[m][0]) & (Xu < xb_i[m][1]) & (Yu > yb_i[m][0]) & (Yu < yb_i[m][1]) & (Zu > zb_i[m][0]) & (Zu < zb_i[m][1])))
+        boundary_indices.append(temp1)
+
+    boundary_type.extend(B_type_i)
+    boundary_value.extend(ub_i)
+
+    return boundary_indices, boundary_type, boundary_value
+
+
     
     
     

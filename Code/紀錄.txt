@@ -1,0 +1,4 @@
+.\Poisson_2D_v1_5_2.py
+1. 加入3D 
+   Diff_mat_3D(Nx, Ny, Nz)@diff_matrices.py
+2. boundary_regions_3d@boundary_definition.py

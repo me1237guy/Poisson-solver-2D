@@ -76,6 +76,37 @@ def geo_src_def(geo_preset):
     #==============================================================================
     
     
+    if geo_preset == 'cap_3d':
+        # Define spatial coordinates in 3D
+        Nx = 300  # No. of grid points along x direction
+        Ny = 200  # No. of grid points along y direction
+        Nz = 100  # No. of grid points along z direction
+        x = np.linspace(-6, 6, Nx)  # x variables in 1D
+        y = np.linspace(-3, 3, Ny)  # y variable in 1D
+        z = np.linspace(-1, 1, Nz)  # z variable in 1D
+
+        # Dirichlet/Neumann boundary conditions at outerwalls
+        uL = 0
+        uR = 0
+        uT = 0
+        uB = 0
+        uF = 0
+        uBK = 0
+        ub_o = [uL, uR, uT, uB, uF, uBK]
+        B_type_o = [1, 1, 2, 2, 2, 2]  # Type of outer boundary conditions
+
+        # Inner rectangular region
+        ub_i = [2, -2]  # Boundary values at inner region
+        xb_i = [[-2, 2], [-2, 2]]  # Lower and upper limits of x defining the inner boundary region
+        yb_i = [[0.5, 0.6], [-0.6, -0.5]]  # Lower and upper limits of y defining the inner boundary region
+        zb_i = [[-0.1, 0.1]]  # Lower and upper limits of z defining the inner boundary region
+        B_type_i = [0, 0]  # Type of inner boundary conditions
+
+        # Source function
+        f = np.zeros(Nx * Ny * Nz)
+
+        return x, y, z, ub_o, B_type_o, xb_i, yb_i, zb_i, ub_i, B_type_i, f
+
     
     
     

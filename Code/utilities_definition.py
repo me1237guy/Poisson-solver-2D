@@ -32,11 +32,35 @@ def my_contourf(x,y,F,ttl,clrmp = 'inferno'):
     py.ylim([y[0],y[-1]])
     return 0
     
+def my_contourf_3d(x, y, z, F, ttl, clrmp='inferno'):
+    X, Y, Z = np.meshgrid(x, y, z)
+    cnt = py.contourf(X, Y, F, 41, cmap=clrmp)
+
+    # Antialiasing block for exporting figure to pdf later
+    for c in cnt.collections:
+        c.set_edgecolor("face")
+
+    cbar = py.colorbar()
+    py.xlabel(r'$x$', fontsize=26)
+    py.ylabel(r'$y$', fontsize=26)
+    py.zlabel(r'$z$', fontsize=26)
+    cbar.set_label(ttl, fontsize=26)
+    return 0
 
 def my_scatter(x,y,clr,ttl='',msize = 2):
     py.plot(x,y,'.',markersize=msize,color=clr)
     py.xlabel(r'$x$',fontsize=26); py.ylabel(r'$y$',fontsize = 26); py.title(ttl)
     return 0
+
+def my_scatter_3d(ax, x, y, z, clr, ttl='', msize=2):
+    ax.scatter(x, y, z, s=msize, c=clr)
+    ax.set_xlabel(r'$x$', fontsize=26)
+    ax.set_ylabel(r'$y$', fontsize=26)
+    ax.set_zlabel(r'$z$', fontsize=26)
+    ax.set_title(ttl)
+    return 0
+
+
 
 
 def color_distinct():

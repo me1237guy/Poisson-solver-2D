@@ -62,3 +62,42 @@ def Diff_mat_2D(Nx,Ny):
     
     # Return compressed Sparse Row format of the sparse matrices
     return Dx_2d.tocsr(), Dy_2d.tocsr(), D2x_2d.tocsr(), D2y_2d.tocsr()
+
+def Diff_mat_3D(Nx, Ny, Nz):
+    # Function to generate 1D differentiation matrices
+    def Diff_mat_1D(N):
+        D_1d = sp.diags([-1, 1], [-1, 1], shape=(N, N))
+        D_1d = sp.lil_matrix(D_1d)
+        D_1d[0, [0, 1, 2]] = [-3, 4, -1]
+        D_1d[N - 1, [N - 3, N - 2, N - 1]] = [1, -4, 3]
+
+        D2_1d = sp.diags([1, -2, 1], [-1, 0, 1], shape=(N, N))
+        D2_1d = sp.lil_matrix(D2_1d)
+        D2_1d[0, [0, 1, 2, 3]] = [2, -5, 4, -1]
+        D2_1d[N - 1, [N - 4, N - 3, N - 2, N - 1]] = [-1, 4, -5, 2]
+
+        return D_1d, D2_1d
+
+    # Generate 1D differentiation matrices for x, y, and z directions
+    Dx_1d, D2x_1d = Diff_mat_1D(Nx)
+    Dy_1d, D2y_1d = Diff_mat_1D(Ny)
+    Dz_1d, D2z_1d = Diff_mat_1D(Nz)
+
+    # Sparse identity matrices for each direction
+    Ix = sp.eye(Nx)
+    Iy = sp.eye(Ny)
+    Iz = sp.eye(Nz)
+
+    # 3D matrix operators from 1D operators using kronecker product
+    # First partial derivatives
+    Dx_3d = sp.kron(sp.kron(Iz, Iy), Dx_1d)
+    Dy_3d = sp.kron(sp.kron(Iz, Dy_1d), Ix)
+    Dz_3d = sp.kron(sp.kron(Dz_1d, Iy), Ix)
+
+    # Second partial derivatives
+    D2x_3d = sp.kron(sp.kron(Iz, Iy), D2x_1d)
+    D2y_3d = sp.kron(sp.kron(Iz, D2y_1d), Ix)
+    D2z_3d = sp.kron(sp.kron(D2z_1d, Iy), Ix)
+
+    # Return CSR format of the sparse matrices
+    return Dx_3d.tocsr(), Dy_3d.tocsr(), Dz_3d.tocsr(), D2x_3d.tocsr(), D2y_3d.tocsr(), D2z_3d.tocsr()
